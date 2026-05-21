@@ -10,18 +10,21 @@
     const params = new URLSearchParams(window.location.search);
     const email = params.get('email');
     const accion = params.get('accion');
-    const flowUrl = 'https://bd4a763d737defaeacf0e99a4d082f.58.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b2fe41514358434ebfd8d0c3ac7d93bf/triggers/manual/paths/invoke?api-version=1';
+    const flowUrl = 'https://bd4a763d737defaeacf0e99a4d082f.58.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b2fe41514358434ebfd8d0c3ac7d93bf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xraaWVMOl8mvVYae3WXNM_G9RTaBhuKB5pHja5eU5rQ';
 
     if (email && accion) {
-      fetch(`${flowUrl}&email=${encodeURIComponent(email)}&accion=${accion}`)
-        .then(() => {
-          document.body.innerHTML = accion === 'checkin'
-            ? '<h2>✅ Check In registrado correctamente</h2>'
-            : '<h2>🔴 Check Out registrado correctamente</h2>';
-        })
-        .catch(() => {
-          document.body.innerHTML = '<h2>❌ Error al registrar. Intenta de nuevo.</h2>';
-        });
+      fetch(`${flowUrl}&email=${encodeURIComponent(email)}&accion=${accion}`, {
+        method: 'GET',
+        mode: 'no-cors'
+      })
+      .then(() => {
+        document.body.innerHTML = accion === 'checkin'
+          ? '<h2>✅ Check In registrado correctamente</h2>'
+          : '<h2>🔴 Check Out registrado correctamente</h2>';
+      })
+      .catch(() => {
+        document.body.innerHTML = '<h2>❌ Error al registrar. Intenta de nuevo.</h2>';
+      });
     }
   </script>
   <p>Procesando tu solicitud...</p>
