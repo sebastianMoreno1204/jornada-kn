@@ -12,21 +12,73 @@
     const accion = params.get('accion');
     const flowUrl = 'https://bd4a763d737defaeacf0e99a4d082f.58.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/b2fe41514358434ebfd8d0c3ac7d93bf/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xraaWVMOl8mvVYae3WXNM_G9RTaBhuKB5pHja5eU5rQ';
 
+    const mensajes = {
+      checkin_ok: {
+        color: '#107C10',
+        icono: '✅',
+        titulo: 'Check In Registrado',
+        texto: 'Tu entrada fue registrada correctamente.'
+      },
+      checkout_ok: {
+        color: '#D13438',
+        icono: '🔴',
+        titulo: 'Check Out Registrado',
+        texto: 'Tu salida fue registrada correctamente.'
+      },
+      duplicado: {
+        color: '#FF8C00',
+        icono: '⚠️',
+        titulo: 'Ya tienes un turno abierto',
+        texto: 'No puedes hacer Check In porque ya tienes un turno activo hoy. Si necesitas corregir algo usa el Registro Manual.'
+      },
+      error: {
+        color: '#D13438',
+        icono: '❌',
+        titulo: 'Error al registrar',
+        texto: 'Por favor intenta de nuevo o usa el Registro Manual.'
+      }
+    };
+
+    function mostrarMensaje(tipo) {
+      const m = mensajes[tipo] || mensajes.error;
+      document.body.innerHTML = `
+        <div style="font-family:Calibri,Arial,sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f0f2f5;padding:20px;">
+          <div style="background:white;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);max-width:400px;width:100%;overflow:hidden;">
+            <div style="background:${m.color};padding:24px;text-align:center;">
+              <p style="color:white;font-size:32px;margin:0;">${m.icono}</p>
+              <p style="color:white;font-size:18px;font-weight:bold;margin:8px 0 0 0;">${m.titulo}</p>
+            </div>
+            <div style="padding:24px;text-align:center;">
+              <p style="color:#555;font-size:14px;line-height:1.6;">${m.texto}</p>
+              <p style="margin-top:16px;">
+                <a href="https://sebastianmoreno1204.github.io/jornada-kn/manual.html?email=${encodeURIComponent(email)}" 
+                   style="color:#003366;font-size:13px;">✏️ Ir al Registro Manual</a>
+              </p>
+              <p style="color:#999;font-size:12px;margin-top:12px;">Puedes cerrar esta ventana.</p>
+            </div>
+          </div>
+        </div>`;
+    }
+
     if (email && accion) {
-      fetch(`${flowUrl}&email=${encodeURIComponent(email)}&accion=${accion}`, {
-        method: 'GET',
-        mode: 'no-cors'
-      })
-      .then(() => {
-        document.body.innerHTML = accion === 'checkin'
-          ? '<h2>✅ Check In registrado correctamente</h2>'
-          : '<h2>🔴 Check Out registrado correctamente</h2>';
-      })
-      .catch(() => {
-        document.body.innerHTML = '<h2>❌ Error al registrar. Intenta de nuevo.</h2>';
-      });
+      document.body.innerHTML = `
+        <div style="font-family:Calibri,Arial,sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f0f2f5;">
+          <p style="color:#555;font-size:15px;">⏳ Procesando tu solicitud...</p>
+        </div>`;
+
+      fetch(`${flowUrl}&email=${encodeURIComponent(email)}&accion=${accion}`)
+        .then(res => res.text())
+        .then(body => {
+          if (body.includes('duplicado')) mostrarMensaje('duplicado');
+          else if (body.includes('checkin_ok')) mostrarMensaje('checkin_ok');
+          else if (body.includes('checkout_ok')) mostrarMensaje('checkout_ok');
+          else mostrarMensaje('error');
+        })
+        .catch(() => mostrarMensaje('error'));
     }
   </script>
-  <p>Procesando tu solicitud...</p>
+  <div style="font-family:Calibri,Arial,sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f0f2f5;">
+    <p style="color:#555;font-size:15px;">⏳ Cargando...</p>
+  </div>
 </body>
 </html>
