@@ -14,8 +14,9 @@
     .body { padding: 32px; }
     .field { margin-bottom: 20px; }
     label { display: block; font-size: 13px; color: #555; margin-bottom: 6px; font-weight: 600; }
-    input, select { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; color: #333; background: #fafafa; }
-    input:focus, select:focus { outline: none; border-color: #003366; background: white; }
+    input, select, textarea { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; color: #333; background: #fafafa; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #003366; background: white; }
+    textarea { resize: vertical; min-height: 80px; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .btn { width: 100%; padding: 14px; background: #003366; color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 8px; }
     .btn:hover { background: #004499; }
@@ -23,6 +24,7 @@
     .msg.success { background: #e6f4ea; color: #107C10; display: block; }
     .msg.error { background: #fde7e7; color: #D13438; display: block; }
     .note { font-size: 12px; color: #999; margin-top: 6px; }
+    .optional { font-weight: normal; color: #aaa; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -47,9 +49,13 @@
           <input type="time" id="horaInicio">
         </div>
         <div class="field">
-          <label>Hora Fin <span style="font-weight:normal;color:#aaa">(opcional)</span></label>
+          <label>Hora Fin <span class="optional">(opcional)</span></label>
           <input type="time" id="horaFin">
         </div>
+      </div>
+      <div class="field">
+        <label>Observaciones <span class="optional">(opcional)</span></label>
+        <textarea id="observaciones" placeholder="Ej: Horas extra por cierre de mes, trabajo dominical por urgencia operativa..."></textarea>
       </div>
       <button class="btn" onclick="registrar()">Registrar Jornada</button>
       <div class="msg" id="msg"></div>
@@ -59,31 +65,25 @@
   <script>
     const FLOW_URL = 'https://bd4a763d737defaeacf0e99a4d082f.58.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/e4823f6ebe8e4d4b832c1647ac903fd4/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=japRBKwZhDFUnI0mYS1jr0MuMHPjzD-2Pfd08KYwfTI';
 
-    // Leer email de la URL
     const params = new URLSearchParams(window.location.search);
     const email = params.get('email') || '';
     document.getElementById('email').value = email;
 
-    // Generar días de la semana en curso
     function getDiasSemana() {
       const hoy = new Date();
-      const diaSemana = hoy.getDay(); // 0=domingo
+      const diaSemana = hoy.getDay();
       const lunes = new Date(hoy);
       const diffLunes = diaSemana === 0 ? -6 : 1 - diaSemana;
       lunes.setDate(hoy.getDate() + diffLunes);
-
       const dias = [];
       for (let i = 0; i <= 6; i++) {
         const dia = new Date(lunes);
         dia.setDate(lunes.getDate() + i);
-        if (dia <= hoy) {
-          dias.push(dia);
-        }
+        if (dia <= hoy) dias.push(dia);
       }
       return dias;
     }
 
-    // Llenar selector de fechas
     const select = document.getElementById('fecha');
     const dias = getDiasSemana();
     const diasSemana = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
@@ -101,6 +101,7 @@
       const fecha = document.getElementById('fecha').value;
       const horaInicio = document.getElementById('horaInicio').value;
       const horaFin = document.getElementById('horaFin').value;
+      const observaciones = document.getElementById('observaciones').value;
       const msg = document.getElementById('msg');
 
       if (!horaInicio) {
@@ -109,7 +110,7 @@
         return;
       }
 
-      const url = `${FLOW_URL}&email=${encodeURIComponent(email)}&fecha=${fecha}&horaInicio=${encodeURIComponent(horaInicio)}&horaFin=${encodeURIComponent(horaFin)}`;
+      const url = `${FLOW_URL}&email=${encodeURIComponent(email)}&fecha=${fecha}&horaInicio=${encodeURIComponent(horaInicio)}&horaFin=${encodeURIComponent(horaFin)}&observaciones=${encodeURIComponent(observaciones)}`;
 
       try {
         await fetch(url, { method: 'GET', mode: 'no-cors' });
