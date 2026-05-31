@@ -8,56 +8,34 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f4f0;
+    --bg: #ffffff;
     --surface: #ffffff;
-    --surface2: #f0efe9;
-    --border: rgba(0,0,0,0.1);
-    --border2: rgba(0,0,0,0.18);
-    --text: #1a1a18;
-    --muted: #6b6b64;
-    --accent: #1D9E75;
-    --accent-bg: #E1F5EE;
-    --accent-text: #085041;
-    --warn: #BA7517;
-    --warn-bg: #FAEEDA;
-    --warn-text: #633806;
-    --danger: #A32D2D;
-    --danger-bg: #FCEBEB;
-    --danger-text: #501313;
-    --info: #185FA5;
-    --info-bg: #E6F1FB;
-    --info-text: #042C53;
-    --gray-bg: #F1EFE8;
-    --gray-text: #444441;
+    --surface2: #f0f6ff;
+    --border: rgba(0,51,105,0.12);
+    --border2: rgba(0,51,105,0.22);
+    --text: #001a38;
+    --muted: #4a6080;
+    --kn-navy: #003369;
+    --kn-blue: #0099DA;
+    --kn-green: #08C792;
+    --accent: #08C792;
+    --accent-bg: #e6faf4;
+    --accent-text: #035c41;
+    --warn: #d97706;
+    --warn-bg: #fef3c7;
+    --warn-text: #92400e;
+    --danger: #dc2626;
+    --danger-bg: #fee2e2;
+    --danger-text: #7f1d1d;
+    --info: #0099DA;
+    --info-bg: #e0f4fd;
+    --info-text: #003369;
+    --gray-bg: #f0f6ff;
+    --gray-text: #4a6080;
     --r: 10px;
     --r-lg: 16px;
     --mono: 'DM Mono', monospace;
     --sans: 'Syne', sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #16161a;
-      --surface: #1e1e24;
-      --surface2: #26262e;
-      --border: rgba(255,255,255,0.1);
-      --border2: rgba(255,255,255,0.18);
-      --text: #e8e8e0;
-      --muted: #8a8a82;
-      --accent: #1D9E75;
-      --accent-bg: #04342C;
-      --accent-text: #9FE1CB;
-      --warn: #EF9F27;
-      --warn-bg: #412402;
-      --warn-text: #FAC775;
-      --danger: #E24B4A;
-      --danger-bg: #501313;
-      --danger-text: #F7C1C1;
-      --info: #378ADD;
-      --info-bg: #042C53;
-      --info-text: #B5D4F4;
-      --gray-bg: #2C2C2A;
-      --gray-text: #B4B2A9;
-    }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -68,28 +46,29 @@
     padding: 0 0 60px;
   }
   header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 24px 16px;
+    background: var(--kn-navy);
+    border-bottom: 3px solid var(--kn-blue);
+    padding: 16px 24px;
     position: sticky; top: 0; z-index: 100;
   }
   .header-inner {
     max-width: 720px; margin: 0 auto;
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
   }
-  .logo { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+  .logo { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: rgba(255,255,255,0.9); text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+  .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--kn-green); display: inline-block; }
   .employee-chip {
     display: flex; align-items: center; gap: 8px;
-    background: var(--surface2); border-radius: 999px; padding: 6px 14px 6px 8px;
-    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.12); border-radius: 999px; padding: 5px 14px 5px 6px;
+    border: 1px solid rgba(255,255,255,0.2);
   }
   .avatar {
     width: 28px; height: 28px; border-radius: 50%;
-    background: var(--accent-bg); color: var(--accent-text);
+    background: var(--kn-green); color: var(--kn-navy);
     display: flex; align-items: center; justify-content: center;
     font-size: 11px; font-weight: 600; font-family: var(--mono);
   }
-  .emp-name { font-size: 13px; font-weight: 500; }
+  .emp-name { font-size: 13px; font-weight: 500; color: #fff; }
 
   main { max-width: 720px; margin: 0 auto; padding: 24px 16px 0; }
 
@@ -98,7 +77,7 @@
   }
   .week-label {
     flex: 1; text-align: center;
-    font-family: var(--mono); font-size: 13px; color: var(--muted);
+    font-family: var(--mono); font-size: 13px; color: var(--kn-navy);
     font-weight: 500;
   }
   .btn-icon {
@@ -108,7 +87,7 @@
     cursor: pointer; transition: background 0.15s;
     font-size: 16px; color: var(--text);
   }
-  .btn-icon:hover { background: var(--surface2); }
+  .btn-icon:hover { background: var(--kn-navy); color: #fff; border-color: var(--kn-navy); }
 
   .summary-bar {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
@@ -117,11 +96,17 @@
   .stat {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--r); padding: 12px;
+    border-top: 3px solid var(--kn-blue);
   }
+  .stat:first-child { border-top-color: var(--kn-navy); }
+  .stat:nth-child(2) { border-top-color: var(--kn-green); }
+  .stat:nth-child(3) { border-top-color: var(--kn-blue); }
+  .stat:nth-child(4) { border-top-color: var(--danger); }
   .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-  .stat-val { font-family: var(--mono); font-size: 20px; font-weight: 500; }
+  .stat-val { font-family: var(--mono); font-size: 20px; font-weight: 500; color: var(--kn-navy); }
   .stat-val.ok { color: var(--accent); }
   .stat-val.warn { color: var(--warn); }
+  .stat-val.info { color: var(--kn-blue); }
   .stat-val.danger { color: var(--danger); }
 
   .day-block { margin-bottom: 12px; }
@@ -131,18 +116,19 @@
     border: 1px solid var(--border); border-radius: var(--r);
     cursor: pointer; transition: background 0.15s; gap: 8px;
     user-select: none;
+    border-left: 4px solid var(--kn-blue);
   }
   .day-header:hover { background: var(--surface2); }
   .day-header.expanded { border-radius: var(--r) var(--r) 0 0; border-bottom-color: transparent; }
-  .day-name { font-size: 14px; font-weight: 600; min-width: 90px; }
+  .day-name { font-size: 14px; font-weight: 600; min-width: 90px; color: var(--kn-navy); }
   .day-date { font-family: var(--mono); font-size: 12px; color: var(--muted); }
-  .day-hours { font-family: var(--mono); font-size: 13px; font-weight: 500; margin-left: auto; }
+  .day-hours { font-family: var(--mono); font-size: 13px; font-weight: 500; margin-left: auto; color: var(--kn-navy); }
   .day-status-badges { display: flex; gap: 6px; flex-wrap: wrap; }
   .badge {
     font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 999px;
     font-family: var(--mono);
   }
-  .badge.ok { background: var(--accent-bg); color: var(--accent-text); }
+  .badge.ok { background: var(--kn-green); color: #fff; }
   .badge.warn { background: var(--warn-bg); color: var(--warn-text); }
   .badge.danger { background: var(--danger-bg); color: var(--danger-text); }
   .badge.info { background: var(--info-bg); color: var(--info-text); }
@@ -153,8 +139,8 @@
   .day-body {
     background: var(--surface); border: 1px solid var(--border);
     border-top: none; border-radius: 0 0 var(--r) var(--r);
-    overflow: hidden;
-    display: none;
+    overflow: hidden; display: none;
+    border-left: 4px solid var(--kn-blue);
   }
   .day-body.open { display: block; }
 
@@ -182,22 +168,20 @@
     cursor: pointer; font-size: 13px; color: var(--muted);
     transition: all 0.15s;
   }
-  .btn-edit:hover { background: var(--info-bg); color: var(--info-text); border-color: var(--info); }
+  .btn-edit:hover { background: var(--info-bg); color: var(--kn-blue); border-color: var(--kn-blue); }
 
   .add-registro-btn {
     width: 100%; padding: 10px; border: none;
-    background: var(--surface2); color: var(--muted);
-    font-family: var(--sans); font-size: 13px; cursor: pointer;
+    background: var(--surface2); color: var(--kn-blue);
+    font-family: var(--sans); font-size: 13px; font-weight: 600; cursor: pointer;
     display: flex; align-items: center; justify-content: center; gap: 6px;
     transition: all 0.15s;
     border-top: 1px solid var(--border);
   }
-  .add-registro-btn:hover { background: var(--accent-bg); color: var(--accent-text); }
+  .add-registro-btn:hover { background: var(--kn-green); color: #fff; }
 
-  .day-missing {
-    background: var(--danger-bg); border-color: var(--danger);
-  }
-  .day-missing .day-header { background: var(--danger-bg); }
+  .day-missing .day-header { background: var(--danger-bg); border-left-color: var(--danger); }
+  .day-missing .day-body { border-left-color: var(--danger); }
   .day-missing .day-name { color: var(--danger-text); }
 
   /* MODAL */
@@ -215,15 +199,18 @@
   .modal {
     background: var(--surface); width: 100%; max-width: 480px;
     border-radius: var(--r-lg) var(--r-lg) 0 0;
-    padding: 24px;
+    padding: 0;
     max-height: 90vh; overflow-y: auto;
+    border: 1px solid var(--border);
   }
   @media (min-width: 600px) { .modal { border-radius: var(--r-lg); } }
-  .modal-title { font-size: 17px; font-weight: 600; margin-bottom: 20px; }
+  .modal-header { background: var(--kn-navy); padding: 18px 24px; border-radius: var(--r-lg) var(--r-lg) 0 0; }
+  .modal-body { padding: 20px 24px; }
+  .modal-title { font-size: 16px; font-weight: 600; color: #fff; }
   .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .field { display: flex; flex-direction: column; gap: 6px; }
   .field.full { grid-column: 1 / -1; }
-  label { font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+  label { font-size: 11px; font-weight: 600; color: var(--kn-navy); text-transform: uppercase; letter-spacing: 0.08em; }
   input[type=time], input[type=date], select, textarea {
     padding: 9px 12px; border-radius: var(--r);
     border: 1px solid var(--border2); background: var(--surface2);
@@ -232,8 +219,8 @@
     transition: border-color 0.15s;
   }
   input:focus, select:focus, textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(29,158,117,0.15);
+    border-color: var(--kn-blue);
+    box-shadow: 0 0 0 3px rgba(0,153,218,0.15);
   }
   textarea { resize: vertical; min-height: 70px; font-family: var(--sans); font-size: 13px; }
   .field-error { font-size: 12px; color: var(--danger); margin-top: 4px; display: none; }
@@ -242,22 +229,24 @@
     background: var(--warn-bg); color: var(--warn-text);
     border-radius: var(--r); padding: 10px 14px;
     font-size: 13px; margin-bottom: 16px; display: none;
+    border-left: 3px solid var(--warn);
   }
   .modal-warn-box.show { display: block; }
   .modal-info-box {
     background: var(--info-bg); color: var(--info-text);
     border-radius: var(--r); padding: 10px 14px;
     font-size: 13px; margin-bottom: 16px; display: none;
+    border-left: 3px solid var(--kn-blue);
   }
   .modal-info-box.show { display: block; }
   .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
   .btn-primary {
     flex: 1; padding: 11px; border-radius: var(--r);
-    background: var(--accent); color: #fff; border: none;
+    background: var(--kn-navy); color: #fff; border: none;
     font-family: var(--sans); font-size: 14px; font-weight: 600;
-    cursor: pointer; transition: opacity 0.15s;
+    cursor: pointer; transition: background 0.15s, opacity 0.15s;
   }
-  .btn-primary:hover { opacity: 0.88; }
+  .btn-primary:hover { background: var(--kn-blue); }
   .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
   .btn-cancel {
     padding: 11px 20px; border-radius: var(--r);
@@ -269,7 +258,7 @@
   .btn-cancel:hover { background: var(--surface2); }
 
   .loading-state {
-    text-align: center; padding: 60px 20px; color: var(--muted);
+    text-align: center; padding: 60px 20px; color: var(--kn-blue);
     font-family: var(--mono); font-size: 14px;
   }
   .loading-dot { animation: blink 1.2s infinite; }
@@ -286,11 +275,12 @@
 
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
-    background: var(--text); color: var(--bg);
+    background: var(--kn-navy); color: #fff;
     padding: 10px 20px; border-radius: 999px;
     font-size: 13px; font-weight: 500;
     transition: transform 0.3s ease; z-index: 300;
     pointer-events: none; white-space: nowrap;
+    border: 2px solid var(--kn-blue);
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .toast.error { background: var(--danger); color: #fff; }
@@ -298,6 +288,7 @@
   .approval-note {
     font-size: 12px; color: var(--info-text); margin-top: 6px;
     display: none; background: var(--info-bg); padding: 8px 10px; border-radius: 6px;
+    border-left: 3px solid var(--kn-blue);
   }
   .approval-note.show { display: block; }
 
@@ -314,7 +305,7 @@
 
 <header>
   <div class="header-inner">
-    <span class="logo">KN · Jornadas</span>
+    <span class="logo"><span class="logo-dot"></span> KN · Jornadas</span>
     <div class="employee-chip">
       <div class="avatar" id="avatarInitials">--</div>
       <span class="emp-name" id="empNameDisplay">Cargando...</span>
@@ -332,7 +323,7 @@
   <div class="summary-bar" id="summaryBar">
     <div class="stat"><div class="stat-label">Registros</div><div class="stat-val" id="statTotal">—</div></div>
     <div class="stat"><div class="stat-label">Horas norm.</div><div class="stat-val ok" id="statOrd">—</div></div>
-    <div class="stat"><div class="stat-label">Horas extra</div><div class="stat-val warn" id="statExtra">—</div></div>
+    <div class="stat"><div class="stat-label">Horas extra</div><div class="stat-val info" id="statExtra">—</div></div>
     <div class="stat"><div class="stat-label">Pendientes</div><div class="stat-val danger" id="statPending">—</div></div>
   </div>
 
@@ -346,8 +337,8 @@
 <!-- Modal agregar/editar -->
 <div class="modal-backdrop" id="modalBackdrop">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-title" id="modalTitle">Nuevo registro</div>
-
+    <div class="modal-header"><div class="modal-title" id="modalTitle">Nuevo registro</div></div>
+    <div class="modal-body">
     <div class="modal-warn-box" id="warnOverlap">
       ⚠️ El horario ingresado se cruza con otro registro existente en esta fecha.
     </div>
@@ -428,6 +419,7 @@
     <div class="modal-actions">
       <button class="btn-cancel" id="btnCancelModal">Cancelar</button>
       <button class="btn-primary" id="btnSaveModal">Guardar registro</button>
+    </div>
     </div>
   </div>
 </div>
